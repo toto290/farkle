@@ -11,12 +11,27 @@ def roll_dices(amount):
     return result
 
 
-def count_points(dices_list):
-    counted_points = 0
-    counts = [1, 2, 3, 4, 5, 6]
-    for n in range(0, 6):
-        counts[n] = dices_list.count(n + 1)
-    return counted_points
+def calculate_points(_dices_list):
+    _points_per_eye = list()
+    _eyes_counted = list()
+    for _eye in range(1, 7):
+        _eye_count = _dices_list.count(_eye)
+        _eyes_counted.append(_eye_count)
+        _triple_count = (_eye_count // 3)
+        _single_count = _eye_count - _triple_count
+
+        _eye_points = 0
+        # triple-eyes
+        _eye_points += _triple_count * _eye * 100 if _eye > 1 else _triple_count * _eye * 1000
+        # eye is 1
+        if _eye == 1 and _single_count > 0:
+            _eye_points += _single_count * 100
+        # eye is 5
+        elif _eye == 5 and _single_count > 0:
+            _eye_points += _single_count * 50
+        _points_per_eye.append(_eye_points)
+
+    return _eyes_counted, _points_per_eye
 
 
 def display_dices(not_selected_dices, selected_dices):
@@ -27,6 +42,16 @@ def display_dices(not_selected_dices, selected_dices):
         print("counted dices:")
     for n in range(0, len(selected_dices)):
         print("[" + str(not_selected_dices[n]) + "]")
+
+
+def display_points(_eyes_counted, _eyes_points):
+    _sum = 0
+    for i in range(0, 6):
+        eye = i + 1
+        if _eyes_counted[i] > 0:
+            print(str(_eyes_counted[i]) + "x" + str(eye) + " = " + str(_eyes_points[i]))
+            _sum += _eyes_points[i]
+    print("total score = " + str(_sum))
 
 
 def user_choices(_available_dices, _counted_dices):
@@ -45,20 +70,17 @@ def user_choices(_available_dices, _counted_dices):
 
     return _available_dices, _counted_dices, _round_over
 
-# test
 
-winning_score = 10000
+winning_score = 0
 score = 0
 game_over = False
 # game loop
 while not game_over:
     dices = roll_dices(6)
-    round_over = False
     counted_dices = list()
-    while not round_over:
-        display_dices(dices, counted_dices)
-        dices, counted_dices, round_over = user_choices(dices, counted_dices)
-    
-    
+    #display_dices(dices, counted_dices)
+    eyes_counted, eyes_points = calculate_points(dices)
+    display_points(eyes_counted, eyes_points)
+
     if score >= winning_score:
         game_over = True
