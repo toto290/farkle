@@ -1,5 +1,5 @@
 import random
-import keyboard
+# import keyboard
 
 
 def roll_dices(amount):
@@ -49,26 +49,26 @@ def display_points(_eyes_counted, _eyes_points):
     for i in range(0, 6):
         eye = i + 1
         if _eyes_counted[i] > 0:
-            print(str(_eyes_counted[i]) + "x" + str(eye) + " = " + str(_eyes_points[i]))
+            print(str(_eyes_counted[i]) + "x[" + str(eye) + "] = " + str(_eyes_points[i]))
             _sum += _eyes_points[i]
     print("total score = " + str(_sum))
 
 
-def user_choices(_available_dices, _counted_dices):
-    _round_over = False
-    _waiting_for_input = True
-    while _waiting_for_input:
-        if keyboard.read_key() == "space":
-            _round_over = True
-            _waiting_for_input = False
-        letter = ["a", "b", "c", "d", "e", "f"]
-        for i in range(0, len(letter)):
-            if keyboard.read_key() == letter[i]:
-                _counted_dices.append(_available_dices[i])
-                _available_dices.pop(i)
-                _waiting_for_input = False
-
-    return _available_dices, _counted_dices, _round_over
+# def user_choices(_available_dices, _counted_dices):
+#     _round_over = False
+#     _waiting_for_input = True
+#     while _waiting_for_input:
+#         if keyboard.read_key() == "space":
+#             _round_over = True
+#             _waiting_for_input = False
+#         letter = ["a", "b", "c", "d", "e", "f"]
+#         for i in range(0, len(letter)):
+#             if keyboard.read_key() == letter[i]:
+#                 _counted_dices.append(_available_dices[i])
+#                 _available_dices.pop(i)
+#                 _waiting_for_input = False
+#
+#     return _available_dices, _counted_dices, _round_over
 
 
 winning_score = 0
