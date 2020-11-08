@@ -45,7 +45,7 @@ def user_choices(_available_dices, _counted_dices):
 
     return _available_dices, _counted_dices, _round_over
 
-
+# test
 
 winning_score = 10000
 score = 0
